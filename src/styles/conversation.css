@@ -1,0 +1,137 @@
+@import "../styles/home.css";
+
+.conversation{
+    width: 600px;
+    border: 1px solid var(--background);
+    border-right: 1px solid var(--background);
+}
+.conversation_header{
+    position: sticky;
+    top: -0.1px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid var(--background);
+    z-index: 1;
+}
+.back_button{
+    position: absolute;
+    top: -5px;
+    left: 8px;
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--text);
+}
+.no_chat{
+    text-align: center;
+    margin-top: 10%;
+    opacity: 0.6;
+    font-weight: 600;
+    color: var(--text);
+}
+.friend_info{
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    margin: 0 10px;
+}
+.friend_info img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit:cover;
+    object-position:center;
+}
+.friend_info h4{
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 10px;
+    color: var(--text);
+}
+.conversation_wrapper{
+    min-height:68vh;
+    max-height:68vh;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    /* padding-bottom: 5px; */
+}
+.mess_date{
+    align-self: center;
+    color: var(--text);
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 5px;
+    opacity: 0.6;
+}
+.sender{
+    align-self: flex-end;
+    background-color: var(--background);
+    color: var(--text);
+}
+.receiver{
+    align-self: flex-start;
+    color: white;
+    background-color: coral;
+}
+.sender span{
+    display: block;
+    text-align: right;
+    font-size: 10px;
+    color: var(--text);
+    background-color: transparent;
+}
+.receiver span{
+    display: block;
+    text-align: right;
+    font-size: 10px;
+    color: white;
+    background-color: transparent;
+}
+.conversation_wrapper p{
+    max-width: 250px;
+    padding: 7px 15px;
+    border-radius: 20px;
+    margin: 2px 10px;
+    font-size: 14px;
+}
+
+.conversation_bottom{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 600px;
+}
+.conversation_bottom textarea{
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 15px;
+    background-color: var(--background);
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    resize: none;
+    color: var(--text);
+}
+.conversation_bottom button{
+    background-color: var(--background);
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    outline: none;
+    color: var(--text);
+    border-radius: 10px;
+}
+@media only screen and (max-width: 767px) {
+    .conversation{
+        border: none;
+        border-right: none;
+    }
+    .conversation_wrapper{
+        max-height:68.5vh;
+    }
+    .conversation_bottom{
+        width: 100vw;
+    }
+  }
