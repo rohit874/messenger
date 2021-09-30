@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import Chats from "./Chats";
 
 
-function Home() {
+function Home(props) {
     const history = useHistory();
     useEffect(() => {
         if (!localStorage.hasOwnProperty("authToken")) {
@@ -12,7 +12,7 @@ function Home() {
     })
     return (
         <div className="home_section">
-            <Chats/>
+            <Chats setNavStyle={props.setNavStyle}/>
         </div>
     )
 }

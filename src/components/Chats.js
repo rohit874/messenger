@@ -76,9 +76,12 @@ function Chats(props) {
     function seachConversationID(data){
        var id =  conversations.find((find) => {
             if (find.friendId === data._id) {
+                setConversations([...conversations, {conversationID:find.conversationID , friendId:find.friendId, name:find.name, image:find.image}])
                 return {conversationID:find.conversationID , friendId:find.friendId, name:find.name, image:find.image};
             }
+            return null;
         });
+        setConversations([...conversations,{conversationID:null , friendId:data._id, name:data.name, image:data.image}])
         return id ? id : {conversationID:null , friendId:data._id, name:data.name, image:data.image};
     }
 
@@ -91,11 +94,14 @@ function Chats(props) {
         setSerachState(true);
     }
     const serachOff = () =>{
-        // setSerachState(false);
+        setTimeout(() => {
+        setSerachState(false);
+        }, 500);
     }
 
     const changeStyle = () =>{
         if (deviceWidth<768) {
+        props.setNavStyle("none");
         setChatStyle("none");
         setConversationStyle("block")
         }
@@ -123,7 +129,8 @@ function Chats(props) {
             :
             <>
             <p className="search_for">serach result for '{serachInput}' </p>
-            { serachedFriends.map((data, key)=>{
+            {
+             serachedFriends.map((data, key)=>{
                 return(
                     <div className="friend" onClick={()=>{setGetMessage(seachConversationID(data)); changeStyle()}} key={key}>
                     <div className="friend_pic"><img src={data.image} alt="" />{ onlineUsers.includes(data._id)?<div className="online_dot"><div></div></div>:""}</div>
@@ -136,7 +143,16 @@ function Chats(props) {
             }
             </div>
         </div>
-        <Conversation deviceWidth={deviceWidth} chatStyle={chatStyle} setChatStyle={setChatStyle} conversationStyle={conversationStyle} setConversationStyle={setConversationStyle} onlineUsers={onlineUsers} ChatData={getMessage} socket={socket.current} />
+        <Conversation
+        deviceWidth={deviceWidth}
+        chatStyle={chatStyle}
+        setChatStyle={setChatStyle} 
+        conversationStyle={conversationStyle} 
+        setConversationStyle={setConversationStyle} 
+        onlineUsers={onlineUsers} 
+        ChatData={getMessage} 
+        socket={socket.current}
+        setNavStyle={props.setNavStyle} />
         </>
     )
 }

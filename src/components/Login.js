@@ -45,26 +45,7 @@ function Login(props) {
                             }, 5000);
                     }
           }
-    //   axios.post(
-    //   "http://localhost:5000/api/login",
-    //   { email, password },
-    //   config).then(res => {
-    //         // do good things
-    //         localStorage.setItem("authToken", res.data.access_token);
-    //         props.login(true);
-    //         history.push('/');
-    // })
-    // .catch(err => {
-    //     if (err.response) {
-    //       setError(err.response.data.message);
-    //       setTimeout(() => {
-    //               setError("");
-    //             }, 5000);
-    //     }
-    // })
 }
-
-
 
     return (
         <div className="signnup_div_parent">
@@ -90,7 +71,7 @@ function Login(props) {
         
             <div className="signup_btn_div"><button className="signup_btn">Login</button></div>
             </form>
-            <p className="signup_have">New to Tomato? <Link to="/signup">Create account</Link></p>
+            <p className="signup_have">New to Messenger? <Link to="/signup">Create account</Link></p>
         </div>
         </div>
     )

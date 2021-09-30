@@ -15,7 +15,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 1px 4px 0 #00000033;
+    box-shadow: 0 1px 4px 0 var(--background);
     z-index: 2;
     position: relative;
     /* border-bottom: 1px solid #727272; */
@@ -42,7 +42,15 @@ nav{
   outline: none;
   background-color: transparent;
   color: var(--text);
-  margin-left: 20px;
+  font-weight: 500;
+}
+.current_user_pic{
+  width: 35px;
+  height: 35px;
+  margin: 0 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 .theme-icon{
     margin: 5px;
@@ -111,4 +119,9 @@ input:checked + .slider:before {
 .home_section{
     display: flex;
     flex-wrap: wrap;
+}
+@media only screen and (max-width: 767px) {
+  .logo h1{
+    font-size: 20px;
+  }
 }

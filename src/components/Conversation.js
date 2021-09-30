@@ -4,7 +4,7 @@ import '../styles/conversation.css'
 import axios from 'axios';
 import { userContext } from '../userContext';
 
-function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth,setConversationStyle,setChatStyle}) {
+function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth,setConversationStyle,setChatStyle, setNavStyle}) {
     const [chats, setChats] = useState([]);
     const [arrivalMsg, setArrivalMsg] = useState({});
     const { currentUser } = useContext(userContext);
@@ -17,6 +17,10 @@ function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth
         'Content-Type': 'application/json',
         'Authorization' : `Bearer ${window.localStorage.getItem('authToken')}`
       }};
+
+    useEffect(() => {
+        setChats([]);
+    }, [ChatData?.conversationID])
 
 
 
@@ -72,7 +76,7 @@ function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth
             })
             setText("");
             try {
-                const res = await axios.post('https://messenger-api-rohit.herokuapp.com/api/message', data, config);
+                await axios.post('https://messenger-api-rohit.herokuapp.com/api/message', data, config);
                 // setChats([...chats,res.data]);
             } catch (err) {
                 console.log(err);
@@ -96,24 +100,30 @@ function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth
     //append new message from socket
     useEffect(()=>{
         if (arrivalMsg.senderID === ChatData?.friendId ) {
-        setChats(prev=>([...prev,arrivalMsg]));
+            if (Object.keys(arrivalMsg).length) {
+                setChats(prev=>([...prev,arrivalMsg]));
+            }
         }
-    },[arrivalMsg])
+    },[arrivalMsg, ChatData?.friendId])
 
     //getting new message from socket
     useEffect(()=>{
         socket?.on('getMessage', (msg)=>{
-            setArrivalMsg({ 
-                conversationID:ChatData?.conversationID,
-                senderID:msg.senderId,
-                text:msg.text,
-                createdAt: Date.now()
-            })
+            if (ChatData?.conversationID) {
+                setArrivalMsg({ 
+                    conversationID:ChatData?.conversationID,
+                    senderID:msg.senderId,
+                    text:msg.text,
+                    createdAt: Date.now()
+                })
+            }
+            
         })
-    },[socket])
+    },[socket,ChatData?.conversationID])
 
     //This is for mobile device responsive
     const changeStyle = () =>{
+        setNavStyle("flex");
         setChatStyle("block");
         setConversationStyle("none")
     }

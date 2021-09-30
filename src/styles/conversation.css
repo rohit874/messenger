@@ -24,7 +24,7 @@
 }
 .no_chat{
     text-align: center;
-    margin-top: 10%;
+    margin: 50% 5px;
     opacity: 0.6;
     font-weight: 600;
     color: var(--text);
@@ -50,8 +50,8 @@
     color: var(--text);
 }
 .conversation_wrapper{
-    min-height:68vh;
-    max-height:68vh;
+    min-height:67vh;
+    max-height:67vh;
     overflow: auto;
     display: flex;
     flex-direction: column;
@@ -129,7 +129,8 @@
         border-right: none;
     }
     .conversation_wrapper{
-        max-height:68.5vh;
+        min-height:74.5vh;
+        max-height:81.8vh;
     }
     .conversation_bottom{
         width: 100vw;

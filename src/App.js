@@ -14,7 +14,6 @@ function App() {
   const [ currentUser , setCurrentUser] = useState(null);
 
   // fetching the current user data
-  
   useEffect(()=>{
     if (localStorage.hasOwnProperty("authToken")) {
       const loadUserData = async () => {
@@ -34,11 +33,12 @@ function App() {
       loadUserData();
       setIsLogin(true);
     }
-  },[]);
+  },[islogIn]);
 
   const Logout = () => {
     localStorage.removeItem('authToken');
     setIsLogin(false);
+    window.location.reload(false);
 }
 
 
@@ -46,6 +46,7 @@ function App() {
   let theme_dark = "--theme: black; --text: white; --background:#383838;";
   let theme_light = "--theme: white; --text: black; --background:#ececec;";
   const [themeDark, setThemeDark] = useState(false);
+  const [navStyle, setNavStyle] = useState("flex");
   const Changetheme = () => {
     if (!themeDark) {
       document.documentElement.style.cssText = theme_dark;
@@ -62,9 +63,9 @@ function App() {
     <>
     <Router>
     <userContext.Provider value={{ currentUser }}>
-    <nav>
+    <nav style={{display:navStyle}}>
       <div className="logo">
-        <h1>Massenger</h1>
+        <h1>Messenger</h1>
       </div>
       <div className="nav-right">
         {/* <h5>{currentUser.name}</h5> */}
@@ -73,7 +74,9 @@ function App() {
           <input onChange={Changetheme} type="checkbox" />
           <span className="slider round"></span>
       </label>
+      {currentUser?<img className="current_user_pic" src={currentUser.image} alt=""/>:""}
       { islogIn ? <button onClick={Logout}>Logout</button> : "" }
+      
       </div>
     </nav>
 
@@ -86,7 +89,7 @@ function App() {
         <Signup login={setIsLogin} />
       </Route>
       <Route path="/">
-      <Home /> 
+      <Home setNavStyle={setNavStyle} />
       </Route>
     </Switch>
 
