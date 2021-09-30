@@ -4,14 +4,15 @@ import '../styles/conversation.css'
 import axios from 'axios';
 import { userContext } from '../userContext';
 
-function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth,setConversationStyle,setChatStyle, setNavStyle}) {
+function Conversation(props) {
+    const {onlineUsers,ChatData,socket,conversationStyle,deviceWidth,setConversationStyle,setChatStyle, setNavStyle} = props;
     const [chats, setChats] = useState([]);
     const [arrivalMsg, setArrivalMsg] = useState({});
     const { currentUser } = useContext(userContext);
     const [text, setText] = useState("");
     const data = {};
     const scrollRef = useRef(null);
-
+    
     var config = {
         headers:{
         'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth
                 }}
         }
         loadChat();
-    },[ChatData]);
+    },[ChatData?.conversationID]);
     
     //creating conversation if this is first message
     const createConversation = async ()=>{
@@ -117,7 +118,6 @@ function Conversation({onlineUsers,ChatData,socket,conversationStyle,deviceWidth
                     createdAt: Date.now()
                 })
             }
-            
         })
     },[socket,ChatData?.conversationID])
 

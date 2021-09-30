@@ -76,12 +76,14 @@ function Chats(props) {
     function seachConversationID(data){
        var id =  conversations.find((find) => {
             if (find.friendId === data._id) {
-                setConversations([...conversations, {conversationID:find.conversationID , friendId:find.friendId, name:find.name, image:find.image}])
+                // setConversations([...conversations, {conversationID:find.conversationID , friendId:find.friendId, name:find.name, image:find.image}])
                 return {conversationID:find.conversationID , friendId:find.friendId, name:find.name, image:find.image};
             }
             return null;
         });
-        setConversations([...conversations,{conversationID:null , friendId:data._id, name:data.name, image:data.image}])
+        if (!id) {
+            setConversations([...conversations,{conversationID:null , friendId:data._id, name:data.name, image:data.image}])
+        }
         return id ? id : {conversationID:null , friendId:data._id, name:data.name, image:data.image};
     }
 
