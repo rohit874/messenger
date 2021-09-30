@@ -17,6 +17,7 @@ function Chats(props) {
     const [chatStyle, setChatStyle] = useState("block")
     const [conversationStyle, setConversationStyle] = useState("block");
     const deviceWidth = window.innerWidth;
+    const [refreshConversation, setRefreshConversation] = useState(false);
 
     //socket connections 
     useEffect(()=>{
@@ -53,7 +54,7 @@ function Chats(props) {
             }}
     };
         loadConversations();
-    },[currentUser]);
+    },[currentUser,refreshConversation]);
 
     var config = {
         headers:{
@@ -70,6 +71,10 @@ function Chats(props) {
             console.log(err);
           }
     };
+    
+    const RefreshConv = ()=>{
+        setRefreshConversation(!refreshConversation);
+    }
 
 
     //find in serach if already in chat
@@ -154,7 +159,8 @@ function Chats(props) {
         onlineUsers={onlineUsers} 
         ChatData={getMessage} 
         socket={socket.current}
-        setNavStyle={props.setNavStyle} />
+        setNavStyle={props.setNavStyle}
+        RefreshConv={RefreshConv} />
         </>
     )
 }

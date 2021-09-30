@@ -5,7 +5,7 @@ import axios from 'axios';
 import { userContext } from '../userContext';
 
 function Conversation(props) {
-    const {onlineUsers,ChatData,socket,conversationStyle,deviceWidth,setConversationStyle,setChatStyle, setNavStyle} = props;
+    const {onlineUsers,ChatData,socket,conversationStyle,deviceWidth,setConversationStyle,setChatStyle, setNavStyle,RefreshConv} = props;
     const [chats, setChats] = useState([]);
     const [arrivalMsg, setArrivalMsg] = useState({});
     const { currentUser } = useContext(userContext);
@@ -19,14 +19,15 @@ function Conversation(props) {
         'Authorization' : `Bearer ${window.localStorage.getItem('authToken')}`
       }};
 
-    useEffect(() => {
-        setChats([]);
-    }, [ChatData?.conversationID])
+    // useEffect(() => {
+    //     setChats([]);
+    // }, [ChatData?.conversationID])
 
 
 
     //Loading the chats from database
     useEffect(()=>{
+        setChats([]);
         const loadChat = async () => {
             var config = {
                 headers:{
@@ -43,7 +44,7 @@ function Conversation(props) {
                 }}
         }
         loadChat();
-    },[ChatData?.conversationID]);
+    },[ChatData]);
     
     //creating conversation if this is first message
     const createConversation = async ()=>{
@@ -61,6 +62,7 @@ function Conversation(props) {
         //if this is first message then creating the conversation first on the database
          if (ChatData.conversationID===null) {
             ChatData.conversationID = await createConversation();
+            RefreshConv();
         }
         setText(text.replace(/^\s+|\s+$/gm,''));
         //prepare the message data for the databse
