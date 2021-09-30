@@ -34,7 +34,7 @@ function Conversation(props) {
                 'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${window.localStorage.getItem('authToken')}`
               }};
-            if (ChatData!=null) {
+            if (ChatData?.conversationID!=null) {
                 try{
                     await axios.get(`https://messenger-api-rohit.herokuapp.com/api/message/${ChatData.conversationID}`, config).then((res) => {
                         setChats(res.data);
@@ -121,7 +121,7 @@ function Conversation(props) {
                 })
             }
         })
-    },[socket,ChatData?.conversationID])
+    },[socket,ChatData])
 
     //This is for mobile device responsive
     const changeStyle = () =>{
