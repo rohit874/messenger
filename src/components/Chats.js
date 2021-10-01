@@ -15,7 +15,7 @@ function Chats(props) {
     const [getMessage, setGetMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [chatStyle, setChatStyle] = useState("block")
-    const [conversationStyle, setConversationStyle] = useState("block");
+    const [conversationStyle, setConversationStyle] = useState("flex");
     const deviceWidth = window.innerWidth;
     const [refreshConversation, setRefreshConversation] = useState(false);
 
@@ -110,7 +110,7 @@ function Chats(props) {
         if (deviceWidth<768) {
         props.setNavStyle("none");
         setChatStyle("none");
-        setConversationStyle("block")
+        setConversationStyle("flex")
         }
         
     }

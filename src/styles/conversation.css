@@ -4,6 +4,10 @@
     width: 600px;
     border: 1px solid var(--background);
     border-right: 1px solid var(--background);
+    height: 91.7vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .conversation_header{
     position: sticky;
@@ -50,12 +54,10 @@
     color: var(--text);
 }
 .conversation_wrapper{
-    min-height:67vh;
-    max-height:67vh;
+    flex: 1;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    /* padding-bottom: 5px; */
 }
 .mess_date{
     align-self: center;
@@ -127,10 +129,7 @@
     .conversation{
         border: none;
         border-right: none;
-    }
-    .conversation_wrapper{
-        min-height:74.5vh;
-        max-height:81.8vh;
+        height: 92.5vh;
     }
     .conversation_bottom{
         width: 100vw;
