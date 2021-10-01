@@ -65,6 +65,7 @@ function Conversation(props) {
             //if this is first message then creating the conversation first on the database
             if (ChatData.conversationID===null) {
                 data.conversationId = await createConversation();
+                ChatData.conversationID = data.conversationId;
                 RefreshConv();
             }
             socket.emit('sendMessage', {
