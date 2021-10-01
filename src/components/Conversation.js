@@ -19,12 +19,6 @@ function Conversation(props) {
         'Authorization' : `Bearer ${window.localStorage.getItem('authToken')}`
       }};
 
-    // useEffect(() => {
-    //     setChats([]);
-    // }, [ChatData?.conversationID])
-
-
-
     //Loading the chats from database
     useEffect(()=>{
         setChats([]);
@@ -59,28 +53,29 @@ function Conversation(props) {
     //Sending text message
     const sendText = async () =>{
         document.getElementById("messageBox").focus();
-        //if this is first message then creating the conversation first on the database
-         if (ChatData.conversationID===null) {
-            ChatData.conversationID = await createConversation();
-            RefreshConv();
-        }
         setText(text.replace(/^\s+|\s+$/gm,''));
-        //prepare the message data for the databse
-        data.conversationId=ChatData.conversationID;
-        data.senderID=currentUser._id;
-        data.text=text;
-        data.createdAt=Date.now();
         if (text.replace(/^\s+|\s+$/gm,'').length !== 0) {
+            //prepare the message data for the databse
+            data.conversationId=ChatData.conversationID;
+            data.senderID=currentUser._id;
+            data.text=text;
+            data.createdAt=Date.now();
+            //appent message in existing chat
             setChats([...chats,data]);
+            //if this is first message then creating the conversation first on the database
+            if (ChatData.conversationID===null) {
+                data.conversationId = await createConversation();
+                RefreshConv();
+            }
             socket.emit('sendMessage', {
                 senderId:currentUser._id,
                 receiverId:ChatData.friendId,
                 text 
             })
             setText("");
+            //Storing message in Database
             try {
                 await axios.post('https://messenger-api-rohit.herokuapp.com/api/message', data, config);
-                // setChats([...chats,res.data]);
             } catch (err) {
                 console.log(err);
             }
@@ -167,7 +162,7 @@ function Conversation(props) {
 
             </div>
             <div className="conversation_bottom">
-                <textarea placeholder="Write your message" id="messageBox" onFocus={scroll} onChange={(e)=>setText(e.target.value)} value={text}></textarea>
+                <textarea placeholder="Write your message" id="messageBox" onFocus={scroll} onChange={(e)=>setText(e.target.value)} onKeyDown={(e)=>{if(e.code === "Enter"){sendText()}}} value={text}></textarea>
                 <button onClick={sendText}>Send</button>
             </div> </> : <h3 className="no_chat">Search a friend and select for chat</h3>
             }
