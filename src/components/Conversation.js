@@ -30,7 +30,7 @@ function Conversation(props) {
               }};
             if (ChatData?.conversationID!=null) {
                 try{
-                    await axios.get(`https://messenger-api-rohit.herokuapp.com/api/message/${ChatData.conversationID}`, config).then((res) => {
+                    await axios.get(`http://localhost:5000/api/message/${ChatData.conversationID}`, config).then((res) => {
                         setChats(res.data);
                     })
                 } catch(err){
@@ -43,7 +43,7 @@ function Conversation(props) {
     //creating conversation if this is first message
     const createConversation = async ()=>{
         try {
-            const res = await axios.post('https://messenger-api-rohit.herokuapp.com/api/conversations', {senderID:currentUser._id,recieverID:ChatData.friendId}, config);
+            const res = await axios.post('http://localhost:5000/api/conversations', {senderID:currentUser._id,recieverID:ChatData.friendId}, config);
             return res.data._id;
           } catch (err) {
             console.log(err);
@@ -76,7 +76,7 @@ function Conversation(props) {
             setText("");
             //Storing message in Database
             try {
-                await axios.post('https://messenger-api-rohit.herokuapp.com/api/message', data, config);
+                await axios.post('http://localhost:5000/api/message', data, config);
             } catch (err) {
                 console.log(err);
             }

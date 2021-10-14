@@ -47,7 +47,7 @@ function Signup(props) {
       // console.log(data);
 
       axios.post(
-      "https://messenger-api-rohit.herokuapp.com/api/register",
+      "http://localhost:5000/api/register",
       data,
       config).then(res => {
         // do good things

@@ -1,7 +1,7 @@
 :root{
     --theme:white;
     --text: black;
-    --background:#ececec;;
+    --background:#ececec;
 }
 
 *{
@@ -18,13 +18,12 @@ nav{
     box-shadow: 0 1px 4px 0 var(--background);
     z-index: 2;
     position: relative;
-    /* border-bottom: 1px solid #727272; */
 }
 .logo{
     margin: 5px 10px;
 }
 .logo h1{
-    /* color: #e66333; */
+    font-size: 20px;
     color: var(--text);
 }
 .nav-right{
@@ -53,8 +52,10 @@ nav{
   object-position: center;
 }
 .theme-icon{
-    margin: 5px;
-    color: var(--text);
+  width: 15px;
+  height: 15px;
+  margin: 5px;
+  fill: var(--text);
 }
 
 .switch {

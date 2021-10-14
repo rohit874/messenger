@@ -32,7 +32,7 @@ function Login(props) {
           };
 
           try {
-            const res = await axios.post('https://messenger-api-rohit.herokuapp.com/api/login', { email, password }, config);
+            const res = await axios.post('http://localhost:5000/api/login', { email, password }, config);
             localStorage.setItem("authToken", res.data.access_token);
             props.login(true);
             history.push('/');

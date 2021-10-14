@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import { userContext } from './userContext';
 import axios from 'axios';
+import {ReactComponent as ThemeIcon} from './images/theme_icon.svg';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
         }};
     
         try {
-          const response = await axios.get('https://messenger-api-rohit.herokuapp.com/api/getuser',config)
+          const response = await axios.get('http://localhost:5000/api/getuser',config)
           setCurrentUser(response.data.user);
         } catch (err) {
           Logout();
@@ -47,15 +48,33 @@ function App() {
   let theme_light = "--theme: white; --text: black; --background:#ececec;";
   const [themeDark, setThemeDark] = useState(false);
   const [navStyle, setNavStyle] = useState("flex");
-  const Changetheme = () => {
-    if (!themeDark) {
-      document.documentElement.style.cssText = theme_dark;
+    //checking if dark theme already set 
+    useEffect(()=>{
+      if (!localStorage.hasOwnProperty("theme")) {
+          localStorage.setItem('theme','light');
+      }
+      else{
+        let theme = localStorage.getItem('theme');
+        if (theme==="dark") {
+        document.documentElement.style.cssText = theme_dark;
+        document.getElementById('themeInput').checked = true;
+        setThemeDark(true)
+        }
+      }
+    },[theme_dark])
+  
+    const Changetheme = () => {
+      if (!themeDark) {
+        document.documentElement.style.cssText = theme_dark;
+        localStorage.setItem('theme','dark');
+      }
+      else{
+        document.documentElement.style.cssText = theme_light;
+        localStorage.setItem('theme','light');
+      }
+      setThemeDark(!themeDark);
     }
-    else{
-      document.documentElement.style.cssText = theme_light;
-    }
-    setThemeDark(!themeDark);
-  }
+
 
   
 
@@ -65,13 +84,12 @@ function App() {
     <userContext.Provider value={{ currentUser }}>
     <nav style={{display:navStyle}}>
       <div className="logo">
-        <h1>Messenger</h1>
+        <h1>MineChat</h1>
       </div>
       <div className="nav-right">
-        {/* <h5>{currentUser.name}</h5> */}
-        <span className="theme-icon">&#9728;</span>
+        <ThemeIcon className="theme-icon" />
         <label className="switch">
-          <input onChange={Changetheme} type="checkbox" />
+          <input id="themeInput" onChange={Changetheme} type="checkbox" />
           <span className="slider round"></span>
       </label>
       {currentUser?<img className="current_user_pic" src={currentUser.image} alt=""/>:""}

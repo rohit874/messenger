@@ -22,7 +22,7 @@ function Chats(props) {
     //socket connections 
     useEffect(()=>{
         // alert(window.innerWidth)
-        socket.current = io.connect('https://messenger-api-rohit.herokuapp.com');
+        socket.current = io.connect('http://localhost:5000/');
         socket.current.on('welcome', message=>{
             // console.log(message);
         })
